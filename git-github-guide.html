@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A comprehensive guide to creating a GitHub repository from the terminal using Git and GitHub CLI commands.">
-    <title>Git &amp; GitHub — Terminal Repository Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="description" content="A comprehensive step-by-step guide to creating a GitHub repository from the terminal using Git and GitHub CLI.">
+    <title>Git &amp; GitHub — Terminal Repo Creation Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* ═══════════════════════════════════════════════
+        /* ══════════════════════════════════════════════
            RESET & BASE
-           ═══════════════════════════════════════════════ */
+           ══════════════════════════════════════════════ */
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -18,27 +17,33 @@
         }
 
         :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-card: #1c2333;
-            --bg-terminal: #0a0e14;
-            --text-primary: #e6edf3;
-            --text-secondary: #8b949e;
-            --text-muted: #6e7681;
-            --accent-blue: #58a6ff;
-            --accent-green: #3fb950;
-            --accent-purple: #bc8cff;
-            --accent-orange: #f0883e;
-            --accent-red: #ff7b72;
-            --accent-cyan: #79c0ff;
-            --accent-yellow: #e3b341;
-            --border-color: #30363d;
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-hero: linear-gradient(160deg, #0d1117 0%, #161b22 40%, #1a1040 70%, #0d1117 100%);
-            --shadow-glow: 0 0 30px rgba(88, 166, 255, 0.1);
-            --radius: 12px;
-            --radius-sm: 8px;
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a1f35;
+            --bg-code: #0d1117;
+            --bg-code-hover: #151b27;
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-glow: rgba(99, 102, 241, 0.3);
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-indigo: #818cf8;
+            --accent-violet: #a78bfa;
+            --accent-emerald: #34d399;
+            --accent-amber: #fbbf24;
+            --accent-rose: #fb7185;
+            --accent-sky: #38bdf8;
+            --accent-orange: #fb923c;
+            --gradient-hero: linear-gradient(135deg, #818cf8 0%, #a78bfa 50%, #c084fc 100%);
+            --gradient-card: linear-gradient(145deg, rgba(26, 31, 53, 0.8), rgba(17, 24, 39, 0.9));
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 20px rgba(129, 140, 248, 0.15);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
         }
 
         html {
@@ -51,467 +56,520 @@
             color: var(--text-primary);
             line-height: 1.7;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* ═══════════════════════════════════════════════
-           LAYOUT
-           ═══════════════════════════════════════════════ */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* ═══════════════════════════════════════════════
-           HERO SECTION
-           ═══════════════════════════════════════════════ */
-        .hero {
-            background: var(--gradient-hero);
-            padding: 80px 0 60px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .hero::before {
+        /* ══════════════════════════════════════════════
+           BACKGROUND DECORATIONS
+           ══════════════════════════════════════════════ */
+        body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 30% 50%, rgba(88, 166, 255, 0.06) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(188, 140, 255, 0.06) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 20% 20%, rgba(129, 140, 248, 0.05) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 80%, rgba(167, 139, 250, 0.04) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 50%, rgba(52, 211, 153, 0.02) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
         }
 
-        .hero-content {
+        /* ══════════════════════════════════════════════
+           LAYOUT
+           ══════════════════════════════════════════════ */
+        .container {
             position: relative;
             z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
         }
 
-        .hero-badge {
-            display: inline-block;
-            background: rgba(88, 166, 255, 0.1);
-            border: 1px solid rgba(88, 166, 255, 0.3);
-            color: var(--accent-blue);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 24px;
+        /* ══════════════════════════════════════════════
+           HERO HEADER
+           ══════════════════════════════════════════════ */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 50px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: var(--gradient-hero);
+            border-radius: 3px;
+        }
+
+        .hero-icon {
+            font-size: 56px;
+            margin-bottom: 20px;
+            display: block;
         }
 
         .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #e6edf3 0%, #58a6ff 50%, #bc8cff 100%);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            background: var(--gradient-hero);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 14px;
+            line-height: 1.15;
         }
 
-        .hero p {
-            color: var(--text-secondary);
+        .hero .subtitle {
             font-size: 1.1rem;
-            max-width: 600px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 560px;
             margin: 0 auto;
         }
 
-        /* ═══════════════════════════════════════════════
-           QUICK COPY — ALL COMMANDS BLOCK
-           ═══════════════════════════════════════════════ */
-        .quick-copy {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            margin: 40px auto;
+        /* ══════════════════════════════════════════════
+           QUICK REFERENCE — COPY ALL
+           ══════════════════════════════════════════════ */
+        .quick-ref {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
             overflow: hidden;
-            box-shadow: var(--shadow-glow);
         }
 
-        .quick-copy-header {
+        .quick-ref::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-emerald), var(--accent-sky), var(--accent-violet));
+        }
+
+        .quick-ref-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .quick-ref h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-emerald);
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 16px 24px;
-            background: rgba(63, 185, 80, 0.08);
-            border-bottom: 1px solid var(--border-color);
         }
 
-        .quick-copy-header .icon {
-            font-size: 1.2rem;
+        .quick-ref h2 .icon {
+            font-size: 1.3rem;
         }
 
-        .quick-copy-header h2 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--accent-green);
-            letter-spacing: 0.5px;
-        }
-
-        .quick-copy-body {
-            padding: 0;
-        }
-
-        .quick-copy-body pre {
-            margin: 0;
+        .quick-ref pre {
+            background: var(--bg-code);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
             padding: 24px;
-            background: var(--bg-terminal);
-            font-family: 'Fira Code', 'Consolas', monospace;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
             font-size: 0.88rem;
-            line-height: 2.2;
-            color: var(--accent-green);
+            line-height: 2;
+            color: var(--text-primary);
             overflow-x: auto;
-            user-select: all;
+            white-space: pre;
         }
 
-        .quick-copy-body pre .comment {
+        .quick-ref pre .comment {
             color: var(--text-muted);
         }
 
-        .quick-copy-footer {
-            padding: 12px 24px;
-            background: rgba(63, 185, 80, 0.04);
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            color: var(--text-muted);
+        /* ══════════════════════════════════════════════
+           COPY BUTTONS
+           ══════════════════════════════════════════════ */
+        .btn-copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(129, 140, 248, 0.1);
+            color: var(--accent-indigo);
+            border: 1px solid rgba(129, 140, 248, 0.25);
+            border-radius: var(--radius-sm);
+            font-family: 'Inter', sans-serif;
             font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
         }
 
-        /* ═══════════════════════════════════════════════
-           STEPS SECTION
-           ═══════════════════════════════════════════════ */
-        .steps-section {
-            padding: 60px 0;
+        .btn-copy:hover {
+            background: rgba(129, 140, 248, 0.2);
+            border-color: rgba(129, 140, 248, 0.5);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-1px);
         }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 48px;
+        .btn-copy:active {
+            transform: translateY(0);
         }
 
-        .section-title h2 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 8px;
+        .btn-copy-all {
+            background: rgba(52, 211, 153, 0.1);
+            color: var(--accent-emerald);
+            border-color: rgba(52, 211, 153, 0.25);
+            padding: 10px 20px;
+            font-size: 0.82rem;
         }
 
-        .section-title p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
+        .btn-copy-all:hover {
+            background: rgba(52, 211, 153, 0.2);
+            border-color: rgba(52, 211, 153, 0.5);
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.15);
         }
 
-        /* ═══════════════════════════════════════════════
-           STEP CARD
-           ═══════════════════════════════════════════════ */
-        .step-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            margin-bottom: 32px;
+        /* ══════════════════════════════════════════════
+           STEP CARDS
+           ══════════════════════════════════════════════ */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+        }
+
+        .step {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 0;
+            box-shadow: var(--shadow-md);
             overflow: hidden;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .step-card:hover {
-            border-color: rgba(88, 166, 255, 0.3);
-            box-shadow: var(--shadow-glow);
+        .step:hover {
+            border-color: var(--border-glow);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
 
         .step-header {
             display: flex;
             align-items: center;
             gap: 16px;
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .step-number {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
             font-weight: 800;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .step-1 .step-number { background: rgba(88, 166, 255, 0.15); color: var(--accent-blue); }
-        .step-2 .step-number { background: rgba(240, 136, 62, 0.15); color: var(--accent-orange); }
-        .step-3 .step-number { background: rgba(188, 140, 255, 0.15); color: var(--accent-purple); }
-        .step-4 .step-number { background: rgba(63, 185, 80, 0.15); color: var(--accent-green); }
-        .step-5 .step-number { background: rgba(227, 179, 65, 0.15); color: var(--accent-yellow); }
-        .step-6 .step-number { background: rgba(255, 123, 114, 0.15); color: var(--accent-red); }
-        .step-7 .step-number { background: rgba(121, 192, 255, 0.15); color: var(--accent-cyan); }
-
-        .step-title-area h3 {
             font-size: 1.1rem;
-            font-weight: 700;
+            flex-shrink: 0;
+            letter-spacing: -0.5px;
         }
 
-        .step-title-area .subtitle {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            margin-top: 2px;
+        .step:nth-child(1) .step-number { background: rgba(56, 189, 248, 0.15); color: var(--accent-sky); border: 2px solid rgba(56, 189, 248, 0.3); }
+        .step:nth-child(2) .step-number { background: rgba(129, 140, 248, 0.15); color: var(--accent-indigo); border: 2px solid rgba(129, 140, 248, 0.3); }
+        .step:nth-child(3) .step-number { background: rgba(52, 211, 153, 0.15); color: var(--accent-emerald); border: 2px solid rgba(52, 211, 153, 0.3); }
+        .step:nth-child(4) .step-number { background: rgba(251, 191, 36, 0.15); color: var(--accent-amber); border: 2px solid rgba(251, 191, 36, 0.3); }
+        .step:nth-child(5) .step-number { background: rgba(251, 113, 133, 0.15); color: var(--accent-rose); border: 2px solid rgba(251, 113, 133, 0.3); }
+        .step:nth-child(6) .step-number { background: rgba(249, 115, 22, 0.15); color: var(--accent-orange); border: 2px solid rgba(249, 115, 22, 0.3); }
+        .step:nth-child(7) .step-number { background: rgba(45, 212, 191, 0.15); color: #2dd4bf; border: 2px solid rgba(45, 212, 191, 0.3); }
+
+        .step-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
         .step-body {
-            padding: 24px;
+            padding: 24px 28px 28px;
         }
 
-        /* Terminal block inside step */
-        .terminal {
-            background: var(--bg-terminal);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .terminal-bar {
+        /* Command block inside each step */
+        .cmd-block {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid var(--border-color);
+            justify-content: space-between;
+            gap: 12px;
+            background: var(--bg-code);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin-bottom: 22px;
+            transition: background 0.2s ease;
+            flex-wrap: wrap;
         }
 
-        .terminal-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
+        .cmd-block:hover {
+            background: var(--bg-code-hover);
         }
 
-        .terminal-dot.red { background: #ff5f57; }
-        .terminal-dot.yellow { background: #febc2e; }
-        .terminal-dot.green { background: #28c840; }
-
-        .terminal-bar span {
-            margin-left: 8px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            font-family: 'Fira Code', monospace;
+        .cmd-text {
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--accent-emerald);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            user-select: all;
         }
 
-        .terminal pre {
-            padding: 16px;
-            font-family: 'Fira Code', 'Consolas', monospace;
-            font-size: 0.88rem;
-            line-height: 1.8;
-            color: var(--text-primary);
-            overflow-x: auto;
-            margin: 0;
-        }
-
-        .terminal pre .prompt {
-            color: var(--accent-green);
-        }
-
-        .terminal pre .cmd {
-            color: var(--accent-cyan);
-        }
-
-        .terminal pre .flag {
-            color: var(--accent-orange);
-        }
-
-        .terminal pre .value {
-            color: var(--accent-purple);
-        }
-
-        .terminal pre .output {
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        /* Explanation area */
-        .explanation {
-            padding: 0;
-        }
-
-        .explanation p {
+        /* Explanation sections */
+        .explain {
             color: var(--text-secondary);
-            font-size: 0.92rem;
+            font-size: 0.94rem;
+            line-height: 1.8;
+        }
+
+        .explain p {
             margin-bottom: 12px;
         }
 
-        .explanation p strong {
-            color: var(--text-primary);
+        .explain p:last-child {
+            margin-bottom: 0;
         }
 
-        /* Breakdown table */
-        .breakdown {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-            font-size: 0.88rem;
-        }
-
-        .breakdown th {
-            text-align: left;
-            padding: 10px 14px;
-            background: rgba(88, 166, 255, 0.06);
-            color: var(--accent-blue);
-            font-weight: 600;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.78rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .breakdown td {
-            padding: 10px 14px;
-            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
-            vertical-align: top;
-        }
-
-        .breakdown tr:last-child td {
-            border-bottom: none;
-        }
-
-        .breakdown td:first-child {
-            font-family: 'Fira Code', monospace;
-            color: var(--accent-cyan);
-            white-space: nowrap;
+        .term {
+            display: inline-block;
+            background: rgba(129, 140, 248, 0.12);
+            color: var(--accent-indigo);
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
             font-size: 0.83rem;
             font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(129, 140, 248, 0.15);
         }
 
-        .breakdown td:last-child {
-            color: var(--text-secondary);
+        .flag {
+            display: inline-block;
+            background: rgba(251, 191, 36, 0.1);
+            color: var(--accent-amber);
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 0.83rem;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(251, 191, 36, 0.15);
         }
 
-        /* ═══════════════════════════════════════════════
-           INFO BOXES
-           ═══════════════════════════════════════════════ */
-        .info-box {
+        .breakdown {
+            margin-top: 14px;
+            padding-left: 0;
+            list-style: none;
             display: flex;
-            gap: 12px;
-            padding: 14px 18px;
-            border-radius: var(--radius-sm);
-            margin-top: 16px;
-            font-size: 0.85rem;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .breakdown li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.92rem;
             line-height: 1.6;
-        }
-
-        .info-box.tip {
-            background: rgba(63, 185, 80, 0.08);
-            border: 1px solid rgba(63, 185, 80, 0.2);
-            color: var(--accent-green);
-        }
-
-        .info-box.note {
-            background: rgba(88, 166, 255, 0.08);
-            border: 1px solid rgba(88, 166, 255, 0.2);
-            color: var(--accent-blue);
-        }
-
-        .info-box.warning {
-            background: rgba(227, 179, 65, 0.08);
-            border: 1px solid rgba(227, 179, 65, 0.2);
-            color: var(--accent-yellow);
-        }
-
-        .info-box .icon {
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-
-        /* ═══════════════════════════════════════════════
-           DAILY WORKFLOW SECTION
-           ═══════════════════════════════════════════════ */
-        .daily-section {
-            padding: 0 0 60px;
-        }
-
-        .daily-card {
-            background: linear-gradient(135deg, rgba(88, 166, 255, 0.08) 0%, rgba(188, 140, 255, 0.08) 100%);
-            border: 1px solid rgba(88, 166, 255, 0.2);
-            border-radius: var(--radius);
-            padding: 32px;
-            text-align: center;
-        }
-
-        .daily-card h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .daily-card p {
             color: var(--text-secondary);
+        }
+
+        .breakdown li::before {
+            content: '→';
+            color: var(--accent-violet);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* Tip / Note boxes */
+        .tip {
+            background: rgba(52, 211, 153, 0.06);
+            border-left: 3px solid var(--accent-emerald);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 14px 18px;
+            margin-top: 16px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .tip strong {
+            color: var(--accent-emerald);
+        }
+
+        .warning {
+            background: rgba(251, 191, 36, 0.06);
+            border-left: 3px solid var(--accent-amber);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 14px 18px;
+            margin-top: 16px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .warning strong {
+            color: var(--accent-amber);
+        }
+
+        /* ══════════════════════════════════════════════
+           BONUS: EVERYDAY COMMANDS
+           ══════════════════════════════════════════════ */
+        .bonus {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-top: 50px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bonus::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-amber), var(--accent-orange), var(--accent-rose));
+        }
+
+        .bonus h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-amber);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bonus .subtitle-sm {
+            color: var(--text-muted);
             font-size: 0.9rem;
             margin-bottom: 20px;
         }
 
-        .daily-card .terminal {
-            text-align: left;
-            max-width: 500px;
-            margin: 0 auto;
+        .bonus pre {
+            background: var(--bg-code);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 0.88rem;
+            line-height: 2;
+            color: var(--text-primary);
+            overflow-x: auto;
         }
 
-        /* ═══════════════════════════════════════════════
-           FOOTER
-           ═══════════════════════════════════════════════ */
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid var(--border-color);
+        .bonus pre .comment {
             color: var(--text-muted);
-            font-size: 0.8rem;
         }
 
-        footer a {
-            color: var(--accent-blue);
+        /* ══════════════════════════════════════════════
+           FOOTER
+           ══════════════════════════════════════════════ */
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px 20px;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .footer a {
+            color: var(--accent-indigo);
             text-decoration: none;
         }
 
-        footer a:hover {
+        .footer a:hover {
             text-decoration: underline;
         }
 
-        /* ═══════════════════════════════════════════════
+        /* ══════════════════════════════════════════════
            RESPONSIVE
-           ═══════════════════════════════════════════════ */
+           ══════════════════════════════════════════════ */
         @media (max-width: 640px) {
-            .hero { padding: 50px 0 40px; }
-            .hero h1 { font-size: 1.8rem; }
-            .step-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .step-body { padding: 16px; }
-            .breakdown td:first-child { white-space: normal; }
-            .daily-card { padding: 20px; }
+            .container {
+                padding: 20px 14px 60px;
+            }
+
+            .hero {
+                padding: 40px 10px 35px;
+            }
+
+            .quick-ref, .bonus {
+                padding: 20px;
+            }
+
+            .step-header {
+                padding: 18px 20px;
+            }
+
+            .step-body {
+                padding: 18px 20px 22px;
+            }
+
+            .cmd-block {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .quick-ref-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ══════════════════════════════════════════════
+           COPY FEEDBACK
+           ══════════════════════════════════════════════ */
+        .btn-copy.copied {
+            background: rgba(52, 211, 153, 0.2);
+            color: var(--accent-emerald);
+            border-color: rgba(52, 211, 153, 0.4);
         }
     </style>
 </head>
 <body>
+    <div class="container">
 
-    <!-- ═══════════════ HERO ═══════════════ -->
-    <header class="hero">
-        <div class="container hero-content">
-            <div class="hero-badge">Terminal Reference</div>
-            <h1>Git &amp; GitHub<br>Repository Guide</h1>
-            <p>A complete, step-by-step guide to creating and pushing a repository to GitHub — entirely from the command line.</p>
-        </div>
-    </header>
+        <!-- ═══════════ HERO ═══════════ -->
+        <header class="hero">
+            <span class="hero-icon">⚡</span>
+            <h1>Git &amp; GitHub Repo Creation</h1>
+            <p class="subtitle">A complete terminal guide — from zero to a live GitHub repository, explained step by step.</p>
+        </header>
 
-    <main class="container">
-
-        <!-- ═══════════════ QUICK COPY ALL COMMANDS ═══════════════ -->
-        <section class="quick-copy">
-            <div class="quick-copy-header">
-                <span class="icon">⚡</span>
-                <h2>All Commands — Quick Copy</h2>
+        <!-- ═══════════ QUICK REFERENCE — COPY ALL ═══════════ -->
+        <section class="quick-ref" id="quick-ref">
+            <div class="quick-ref-header">
+                <h2><span class="icon">📋</span> All Commands — Quick Reference</h2>
+                <button class="btn-copy btn-copy-all" onclick="copyAll()">📄 Copy All</button>
             </div>
-            <div class="quick-copy-body">
-<pre><span class="comment"># 1. Check if a git repo already exists</span>
+            <pre id="all-commands"><span class="comment"># 1. Check if a git repo already exists</span>
 git status
 
 <span class="comment"># 2. Initialize a new git repository</span>
@@ -526,415 +584,267 @@ git commit -m "Initial commit"
 <span class="comment"># 5. Authenticate with GitHub (one-time)</span>
 gh auth login
 
-<span class="comment"># 6. Create the repo on GitHub, link &amp; push</span>
-gh repo create your-repo-name --public --source=. --push</pre>
-            </div>
-            <div class="quick-copy-footer">
-                Select all text above → Ctrl+C to copy → Paste into your terminal
-            </div>
+<span class="comment"># 6. Create the repo on GitHub &amp; link it</span>
+gh repo create your-repo-name --public --source=.
+
+<span class="comment"># 7. Push your code to GitHub</span>
+git push -u origin master</pre>
         </section>
 
-        <!-- ═══════════════ STEP-BY-STEP ═══════════════ -->
-        <section class="steps-section">
-            <div class="section-title">
-                <h2>Step-by-Step Breakdown</h2>
-                <p>Every command explained — what it does and what each part means.</p>
-            </div>
+        <!-- ═══════════ STEP-BY-STEP ═══════════ -->
+        <div class="steps">
 
-            <!-- ──── STEP 1: git status ──── -->
-            <article class="step-card step-1">
+            <!-- ─── STEP 1 ─── -->
+            <article class="step">
                 <div class="step-header">
                     <div class="step-number">1</div>
-                    <div class="step-title-area">
-                        <h3>Check Current Status</h3>
-                        <div class="subtitle">See if Git is already tracking this folder</div>
-                    </div>
+                    <h2 class="step-title">Check Repository Status</h2>
                 </div>
                 <div class="step-body">
-                    <div class="terminal">
-                        <div class="terminal-bar">
-                            <div class="terminal-dot red"></div>
-                            <div class="terminal-dot yellow"></div>
-                            <div class="terminal-dot green"></div>
-                            <span>PowerShell</span>
-                        </div>
-<pre><span class="prompt">PS C:\project&gt;</span> <span class="cmd">git status</span></pre>
+                    <div class="cmd-block">
+                        <span class="cmd-text" id="cmd1">git status</span>
+                        <button class="btn-copy" onclick="copyCmd('cmd1', this)">📋 Copy</button>
                     </div>
-                    <div class="explanation">
-                        <p>This is your <strong>starting point</strong>. Before doing anything, check whether Git is already initialized in this folder.</p>
-                        <table class="breakdown">
-                            <thead>
-                                <tr><th>Part</th><th>Meaning</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>git</td>
-                                    <td>Calls the Git program — the version control system installed on your computer.</td>
-                                </tr>
-                                <tr>
-                                    <td>status</td>
-                                    <td>A sub-command that shows the current state: which files are tracked, changed, or staged.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="info-box tip">
-                            <span class="icon">💡</span>
-                            <span>If you see <strong>"fatal: not a git repository"</strong>, it means Git is not set up yet — proceed to Step 2. If you see file listings, Git is already active.</span>
+                    <div class="explain">
+                        <p>Before doing anything, run this command to check whether your folder is already a Git repository.</p>
+                        <ul class="breakdown">
+                            <li><span class="term">git</span> — the Git program installed on your computer. It's the version control system that tracks every change you make to your files.</li>
+                            <li><span class="term">status</span> — asks Git: <em>"What's the current state of this folder?"</em> It shows which files are tracked, modified, or staged.</li>
+                        </ul>
+                        <div class="tip">
+                            <strong>💡 What to expect:</strong> If you see <em>"fatal: not a git repository"</em>, it means Git hasn't been set up yet in this folder — which is exactly why we run the next step.
                         </div>
                     </div>
                 </div>
             </article>
 
-            <!-- ──── STEP 2: git init ──── -->
-            <article class="step-card step-2">
+            <!-- ─── STEP 2 ─── -->
+            <article class="step">
                 <div class="step-header">
                     <div class="step-number">2</div>
-                    <div class="step-title-area">
-                        <h3>Initialize the Repository</h3>
-                        <div class="subtitle">Turn your folder into a Git-tracked project</div>
-                    </div>
+                    <h2 class="step-title">Initialize a Git Repository</h2>
                 </div>
                 <div class="step-body">
-                    <div class="terminal">
-                        <div class="terminal-bar">
-                            <div class="terminal-dot red"></div>
-                            <div class="terminal-dot yellow"></div>
-                            <div class="terminal-dot green"></div>
-                            <span>PowerShell</span>
-                        </div>
-<pre><span class="prompt">PS C:\project&gt;</span> <span class="cmd">git</span> <span class="flag">init</span>
-<span class="output">Initialized empty Git repository in C:/project/.git/</span></pre>
+                    <div class="cmd-block">
+                        <span class="cmd-text" id="cmd2">git init</span>
+                        <button class="btn-copy" onclick="copyCmd('cmd2', this)">📋 Copy</button>
                     </div>
-                    <div class="explanation">
-                        <p>This creates a hidden <strong>.git</strong> folder inside your project. That folder is where Git stores all version history.</p>
-                        <table class="breakdown">
-                            <thead>
-                                <tr><th>Part</th><th>Meaning</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>git</td>
-                                    <td>Calls the Git program.</td>
-                                </tr>
-                                <tr>
-                                    <td>init</td>
-                                    <td>Short for <strong>initialize</strong>. Creates a brand-new, empty Git repository in the current folder.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="info-box note">
-                            <span class="icon">📁</span>
-                            <span>The <strong>.git</strong> folder is hidden. It contains all commits, branches, and history. Never delete it unless you want to remove Git tracking entirely.</span>
+                    <div class="explain">
+                        <p>This creates a brand-new, empty Git repository in your current folder.</p>
+                        <ul class="breakdown">
+                            <li><span class="term">git</span> — calls the Git program.</li>
+                            <li><span class="term">init</span> — short for <strong>initialize</strong>. It creates a hidden <span class="term">.git</span> folder inside your project directory. This folder is where Git stores all its internal data — history, branches, configs, etc.</li>
+                        </ul>
+                        <div class="tip">
+                            <strong>💡 Good to know:</strong> You only need to run this <strong>once per project</strong>. After this, Git will quietly track everything inside this folder.
                         </div>
                     </div>
                 </div>
             </article>
 
-            <!-- ──── STEP 3: git add . ──── -->
-            <article class="step-card step-3">
+            <!-- ─── STEP 3 ─── -->
+            <article class="step">
                 <div class="step-header">
                     <div class="step-number">3</div>
-                    <div class="step-title-area">
-                        <h3>Stage All Files</h3>
-                        <div class="subtitle">Tell Git which files to include in the next save</div>
-                    </div>
+                    <h2 class="step-title">Stage All Files</h2>
                 </div>
                 <div class="step-body">
-                    <div class="terminal">
-                        <div class="terminal-bar">
-                            <div class="terminal-dot red"></div>
-                            <div class="terminal-dot yellow"></div>
-                            <div class="terminal-dot green"></div>
-                            <span>PowerShell</span>
-                        </div>
-<pre><span class="prompt">PS C:\project&gt;</span> <span class="cmd">git</span> <span class="flag">add</span> <span class="value">.</span></pre>
+                    <div class="cmd-block">
+                        <span class="cmd-text" id="cmd3">git add .</span>
+                        <button class="btn-copy" onclick="copyCmd('cmd3', this)">📋 Copy</button>
                     </div>
-                    <div class="explanation">
-                        <p>Staging is like placing items on a table before packing them into a box. You choose what goes in.</p>
-                        <table class="breakdown">
-                            <thead>
-                                <tr><th>Part</th><th>Meaning</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>git</td>
-                                    <td>Calls the Git program.</td>
-                                </tr>
-                                <tr>
-                                    <td>add</td>
-                                    <td>The staging command — marks files to be included in the next commit (save point).</td>
-                                </tr>
-                                <tr>
-                                    <td>.</td>
-                                    <td>The <strong>dot</strong> means <em>"everything"</em> — all files and folders in the current directory and subdirectories.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="info-box tip">
-                            <span class="icon">💡</span>
-                            <span>To stage only one specific file instead of all, use: <strong>git add filename.html</strong></span>
+                    <div class="explain">
+                        <p>This tells Git which files you want to include in the next save (commit). Think of it as putting items into a box before sealing it.</p>
+                        <ul class="breakdown">
+                            <li><span class="term">git</span> — calls the Git program.</li>
+                            <li><span class="term">add</span> — tells Git to <strong>stage</strong> files, meaning "prepare these files for the next commit."</li>
+                            <li><span class="term">.</span> — the dot means <strong>everything</strong> in the current directory and all subdirectories. It stages all new and modified files at once.</li>
+                        </ul>
+                        <div class="tip">
+                            <strong>💡 Alternatively:</strong> You can stage individual files with <span class="term">git add filename.html</span> if you don't want to include everything.
                         </div>
                     </div>
                 </div>
             </article>
 
-            <!-- ──── STEP 4: git commit ──── -->
-            <article class="step-card step-4">
+            <!-- ─── STEP 4 ─── -->
+            <article class="step">
                 <div class="step-header">
                     <div class="step-number">4</div>
-                    <div class="step-title-area">
-                        <h3>Commit (Save a Snapshot)</h3>
-                        <div class="subtitle">Permanently save staged files into Git history</div>
-                    </div>
+                    <h2 class="step-title">Commit Your Files</h2>
                 </div>
                 <div class="step-body">
-                    <div class="terminal">
-                        <div class="terminal-bar">
-                            <div class="terminal-dot red"></div>
-                            <div class="terminal-dot yellow"></div>
-                            <div class="terminal-dot green"></div>
-                            <span>PowerShell</span>
-                        </div>
-<pre><span class="prompt">PS C:\project&gt;</span> <span class="cmd">git</span> <span class="flag">commit</span> <span class="flag">-m</span> <span class="value">"Initial commit"</span>
-<span class="output">[master (root-commit) 259a496] Initial commit
- 1 file changed, 3 insertions(+)</span></pre>
+                    <div class="cmd-block">
+                        <span class="cmd-text" id="cmd4">git commit -m "Initial commit"</span>
+                        <button class="btn-copy" onclick="copyCmd('cmd4', this)">📋 Copy</button>
                     </div>
-                    <div class="explanation">
-                        <p>A commit is a <strong>permanent snapshot</strong> of your project at this moment. Think of it as a save point in a video game — you can always come back to it.</p>
-                        <table class="breakdown">
-                            <thead>
-                                <tr><th>Part</th><th>Meaning</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>git</td>
-                                    <td>Calls the Git program.</td>
-                                </tr>
-                                <tr>
-                                    <td>commit</td>
-                                    <td>Saves all staged files as a new snapshot in the project history.</td>
-                                </tr>
-                                <tr>
-                                    <td>-m</td>
-                                    <td>Short for <strong>--message</strong>. Lets you add a description right in the command line.</td>
-                                </tr>
-                                <tr>
-                                    <td>"Initial commit"</td>
-                                    <td>Your <strong>message</strong> — a short note describing what this commit contains. Use quotes around it. You can write anything here, e.g. <em>"Added login page"</em>.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="info-box warning">
-                            <span class="icon">⚠️</span>
-                            <span>Without the <strong>-m</strong> flag, Git will open a text editor for you to type the message. Using <strong>-m</strong> is faster and simpler.</span>
+                    <div class="explain">
+                        <p>This <strong>saves a snapshot</strong> of all your staged files into Git's history. It's like taking a photo of your project at this exact moment.</p>
+                        <ul class="breakdown">
+                            <li><span class="term">git</span> — calls the Git program.</li>
+                            <li><span class="term">commit</span> — creates a permanent snapshot (a "save point") of everything you staged with <span class="term">git add</span>.</li>
+                            <li><span class="flag">-m</span> — stands for <strong>message</strong>. This flag lets you write a short description directly in the command, without opening a text editor.</li>
+                            <li><span class="term">"Initial commit"</span> — the message itself. It describes what this snapshot contains. You can write anything here, e.g. <em>"Added homepage"</em> or <em>"Fixed login bug"</em>.</li>
+                        </ul>
+                        <div class="warning">
+                            <strong>⚠️ Important:</strong> The message must be in quotes. Without the <span class="flag">-m</span> flag, Git opens a text editor (usually Vim), which can be confusing for beginners.
                         </div>
                     </div>
                 </div>
             </article>
 
-            <!-- ──── STEP 5: gh auth login ──── -->
-            <article class="step-card step-5">
+            <!-- ─── STEP 5 ─── -->
+            <article class="step">
                 <div class="step-header">
                     <div class="step-number">5</div>
-                    <div class="step-title-area">
-                        <h3>Authenticate with GitHub</h3>
-                        <div class="subtitle">One-time login so your terminal can talk to GitHub</div>
-                    </div>
+                    <h2 class="step-title">Authenticate with GitHub</h2>
                 </div>
                 <div class="step-body">
-                    <div class="terminal">
-                        <div class="terminal-bar">
-                            <div class="terminal-dot red"></div>
-                            <div class="terminal-dot yellow"></div>
-                            <div class="terminal-dot green"></div>
-                            <span>PowerShell</span>
-                        </div>
-<pre><span class="prompt">PS C:\project&gt;</span> <span class="cmd">gh</span> <span class="flag">auth</span> <span class="value">login</span></pre>
+                    <div class="cmd-block">
+                        <span class="cmd-text" id="cmd5">gh auth login</span>
+                        <button class="btn-copy" onclick="copyCmd('cmd5', this)">📋 Copy</button>
                     </div>
-                    <div class="explanation">
-                        <p>This command opens an interactive login flow. GitHub needs to know <strong>who you are</strong> before letting you create repositories.</p>
-                        <table class="breakdown">
-                            <thead>
-                                <tr><th>Part</th><th>Meaning</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>gh</td>
-                                    <td>Calls the <strong>GitHub CLI</strong> (Command Line Interface) — a separate tool from Git, made specifically for GitHub.</td>
-                                </tr>
-                                <tr>
-                                    <td>auth</td>
-                                    <td>The authentication module — handles login and tokens.</td>
-                                </tr>
-                                <tr>
-                                    <td>login</td>
-                                    <td>Starts the login process. You'll be asked to choose GitHub.com, HTTPS, and browser login.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="info-box note">
-                            <span class="icon">🔑</span>
-                            <span>You only need to do this <strong>once per machine</strong>. After logging in, your credentials are saved locally.</span>
+                    <div class="explain">
+                        <p>Before you can create repos on GitHub from the terminal, you need to prove who you are. This command starts the login process.</p>
+                        <ul class="breakdown">
+                            <li><span class="term">gh</span> — the <strong>GitHub CLI</strong> (Command Line Interface). It's a separate tool from Git that lets you interact with GitHub directly from the terminal — create repos, open pull requests, manage issues, etc.</li>
+                            <li><span class="term">auth</span> — the authentication module. Handles everything related to logging in and out.</li>
+                            <li><span class="term">login</span> — starts an interactive login flow. It will ask you to choose GitHub.com, select HTTPS, and authenticate via a web browser.</li>
+                        </ul>
+                        <div class="tip">
+                            <strong>💡 One-time only:</strong> You only need to log in once. After this, the GitHub CLI remembers your credentials. To check your login status later, run <span class="term">gh auth status</span>.
                         </div>
                     </div>
                 </div>
             </article>
 
-            <!-- ──── STEP 6: gh repo create ──── -->
-            <article class="step-card step-6">
+            <!-- ─── STEP 6 ─── -->
+            <article class="step">
                 <div class="step-header">
                     <div class="step-number">6</div>
-                    <div class="step-title-area">
-                        <h3>Create Repo, Link &amp; Push</h3>
-                        <div class="subtitle">Create the GitHub repository and upload your code in one command</div>
-                    </div>
+                    <h2 class="step-title">Create the GitHub Repo &amp; Link It</h2>
                 </div>
                 <div class="step-body">
-                    <div class="terminal">
-                        <div class="terminal-bar">
-                            <div class="terminal-dot red"></div>
-                            <div class="terminal-dot yellow"></div>
-                            <div class="terminal-dot green"></div>
-                            <span>PowerShell</span>
-                        </div>
-<pre><span class="prompt">PS C:\project&gt;</span> <span class="cmd">gh</span> <span class="flag">repo</span> <span class="flag">create</span> <span class="value">your-repo-name</span> <span class="flag">--public</span> <span class="flag">--source=</span><span class="value">.</span> <span class="flag">--push</span>
-<span class="output">✓ Created repository username/your-repo-name on github.com
-  https://github.com/username/your-repo-name
-✓ Added remote https://github.com/username/your-repo-name.git
-✓ Pushed commits to https://github.com/username/your-repo-name.git</span></pre>
+                    <div class="cmd-block">
+                        <span class="cmd-text" id="cmd6">gh repo create your-repo-name --public --source=.</span>
+                        <button class="btn-copy" onclick="copyCmd('cmd6', this)">📋 Copy</button>
                     </div>
-                    <div class="explanation">
-                        <p>This is the <strong>final and most powerful command</strong>. It does three things at once: creates the repo on GitHub, links your local folder to it, and uploads your code.</p>
-                        <table class="breakdown">
-                            <thead>
-                                <tr><th>Part</th><th>Meaning</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>gh</td>
-                                    <td>Calls the GitHub CLI tool.</td>
-                                </tr>
-                                <tr>
-                                    <td>repo</td>
-                                    <td>The repository module — handles creating, cloning, and managing repos.</td>
-                                </tr>
-                                <tr>
-                                    <td>create</td>
-                                    <td>The action: create a new repository on GitHub.</td>
-                                </tr>
-                                <tr>
-                                    <td>your-repo-name</td>
-                                    <td>The <strong>name</strong> you want for your repo on GitHub. Replace this with your desired name (e.g., <em>www1</em>, <em>my-project</em>).</td>
-                                </tr>
-                                <tr>
-                                    <td>--public</td>
-                                    <td>Makes the repo <strong>visible to everyone</strong>. Use <strong>--private</strong> instead if you want only you to see it.</td>
-                                </tr>
-                                <tr>
-                                    <td>--source=.</td>
-                                    <td><strong>--source</strong> tells GitHub CLI where your local code lives. The <strong>dot (.)</strong> means "this current folder."</td>
-                                </tr>
-                                <tr>
-                                    <td>--push</td>
-                                    <td>Automatically <strong>uploads (pushes)</strong> your committed files to the new GitHub repo right after creating it.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="info-box tip">
-                            <span class="icon">🎯</span>
-                            <span>Without <strong>--source=.</strong> and <strong>--push</strong>, the repo is created on GitHub but stays empty — your local code won't be uploaded.</span>
+                    <div class="explain">
+                        <p>This creates a new repository on GitHub and <strong>links</strong> it to your local folder — but doesn't upload files yet.</p>
+                        <ul class="breakdown">
+                            <li><span class="term">gh</span> — calls the GitHub CLI tool (separate from Git itself).</li>
+                            <li><span class="term">repo</span> — the repository module. Manages all repo-related operations (create, delete, clone, fork, etc.).</li>
+                            <li><span class="term">create</span> — tells GitHub to create a brand‑new repository on their servers.</li>
+                            <li><span class="term">your-repo-name</span> — the name of the repository on GitHub. Replace this with whatever you want to call it (e.g. <em>my-portfolio</em>, <em>www1</em>, <em>cool-project</em>).</li>
+                            <li><span class="flag">--public</span> — makes the repo <strong>visible to everyone</strong>. Use <span class="flag">--private</span> instead if you want only you to see it.</li>
+                            <li><span class="flag">--source=.</span> — tells the GitHub CLI that the source code is in your <strong>current directory</strong> (the dot <span class="term">.</span> means "here"). This also automatically sets up the <strong>remote link</strong> (called "origin") between your local folder and the GitHub repo.</li>
+                        </ul>
+                        <div class="tip">
+                            <strong>💡 What happens:</strong> After this, GitHub creates the repo and your local folder knows where to send code. But the files aren't uploaded yet — that's the next step.
                         </div>
                     </div>
                 </div>
             </article>
 
-            <!-- ──── STEP 7: Verify ──── -->
-            <article class="step-card step-7">
+            <!-- ─── STEP 7 ─── -->
+            <article class="step">
                 <div class="step-header">
-                    <div class="step-number">✓</div>
-                    <div class="step-title-area">
-                        <h3>Verify — You're Done!</h3>
-                        <div class="subtitle">Confirm everything is connected and pushed</div>
-                    </div>
+                    <div class="step-number">7</div>
+                    <h2 class="step-title">Push Your Code to GitHub</h2>
                 </div>
                 <div class="step-body">
-                    <div class="terminal">
-                        <div class="terminal-bar">
-                            <div class="terminal-dot red"></div>
-                            <div class="terminal-dot yellow"></div>
-                            <div class="terminal-dot green"></div>
-                            <span>PowerShell</span>
-                        </div>
-<pre><span class="prompt">PS C:\project&gt;</span> <span class="cmd">git</span> <span class="flag">remote</span> <span class="value">-v</span>
-<span class="output">origin  https://github.com/username/your-repo-name.git (fetch)
-origin  https://github.com/username/your-repo-name.git (push)</span></pre>
+                    <div class="cmd-block">
+                        <span class="cmd-text" id="cmd7">git push -u origin master</span>
+                        <button class="btn-copy" onclick="copyCmd('cmd7', this)">📋 Copy</button>
                     </div>
-                    <div class="explanation">
-                        <p>This shows the <strong>remote connections</strong> — where Git will push and pull code from.</p>
-                        <table class="breakdown">
-                            <thead>
-                                <tr><th>Part</th><th>Meaning</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>git</td>
-                                    <td>Calls the Git program.</td>
-                                </tr>
-                                <tr>
-                                    <td>remote</td>
-                                    <td>Manages connections to remote repositories (like GitHub).</td>
-                                </tr>
-                                <tr>
-                                    <td>-v</td>
-                                    <td>Short for <strong>--verbose</strong>. Shows the full URL of each remote connection.</td>
-                                </tr>
-                                <tr>
-                                    <td>origin</td>
-                                    <td>The default name Git gives to your primary remote. It points to your GitHub repo URL.</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="explain">
+                        <p>This <strong>uploads</strong> your committed files from your computer to GitHub. After this, your code is live!</p>
+                        <ul class="breakdown">
+                            <li><span class="term">git</span> — calls the Git program.</li>
+                            <li><span class="term">push</span> — sends your local commits to a remote server (in this case, GitHub).</li>
+                            <li><span class="flag">-u</span> — stands for <strong>upstream</strong>. It tells Git to remember this connection so that next time, you can just type <span class="term">git push</span> without specifying where.</li>
+                            <li><span class="term">origin</span> — the default name for the remote GitHub repository. This was automatically set up by the previous step (<span class="flag">--source=.</span>).</li>
+                            <li><span class="term">master</span> — the name of your branch. This is the default main branch that was created when you ran <span class="term">git init</span>.</li>
+                        </ul>
+                        <div class="tip">
+                            <strong>💡 Result:</strong> Your code is now live on GitHub! Visit <span class="term">https://github.com/yourusername/your-repo-name</span> to see it. From now on, just use <span class="term">git push</span> to upload future changes.
+                        </div>
                     </div>
                 </div>
             </article>
 
-        </section>
-
-        <!-- ═══════════════ DAILY WORKFLOW ═══════════════ -->
-        <section class="daily-section">
-            <div class="daily-card">
-                <h3>🔄 Daily Workflow — After Initial Setup</h3>
-                <p>Once your repo is created, these 3 commands are all you need to save and push changes:</p>
-                <div class="terminal">
-                    <div class="terminal-bar">
-                        <div class="terminal-dot red"></div>
-                        <div class="terminal-dot yellow"></div>
-                        <div class="terminal-dot green"></div>
-                        <span>PowerShell — Daily Commands</span>
-                    </div>
-<pre><span class="prompt">PS C:\project&gt;</span> <span class="cmd">git</span> <span class="flag">add</span> <span class="value">.</span>
-<span class="prompt">PS C:\project&gt;</span> <span class="cmd">git</span> <span class="flag">commit</span> <span class="flag">-m</span> <span class="value">"describe your changes"</span>
-<span class="prompt">PS C:\project&gt;</span> <span class="cmd">git</span> <span class="flag">push</span></pre>
-                </div>
-                <div class="info-box tip" style="text-align: left; margin-top: 20px;">
-                    <span class="icon">🚀</span>
-                    <span><strong>git push</strong> — uploads your new commits to GitHub. No flags needed after the initial setup because Git already remembers where to push.</span>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ═══════════════ FOOTER ═══════════════ -->
-    <footer>
-        <div class="container">
-            <p>Git &amp; GitHub Terminal Guide — Created March 2026</p>
-            <p style="margin-top: 6px;">
-                <a href="https://cli.github.com/" target="_blank" rel="noopener">GitHub CLI Docs</a> &nbsp;·&nbsp;
-                <a href="https://git-scm.com/docs" target="_blank" rel="noopener">Git Reference</a>
-            </p>
         </div>
-    </footer>
 
+        <!-- ═══════════ BONUS: EVERYDAY COMMANDS ═══════════ -->
+        <section class="bonus">
+            <h2>🔄 After Setup — Everyday Commands</h2>
+            <p class="subtitle-sm">Once your repo exists, use these 3 commands whenever you make changes:</p>
+            <pre><span class="comment"># Stage all changed files</span>
+git add .
+
+<span class="comment"># Save a snapshot with a description</span>
+git commit -m "describe your changes"
+
+<span class="comment"># Upload to GitHub</span>
+git push</pre>
+        </section>
+
+        <!-- ═══════════ FOOTER ═══════════ -->
+        <footer class="footer">
+            <p>Git &amp; GitHub Terminal Guide &bull; Created March 2026</p>
+            <p>GitHub CLI Docs: <a href="https://cli.github.com/manual/" target="_blank" rel="noopener">cli.github.com/manual</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Minimal JS — only for copy-to-clipboard functionality -->
+    <script>
+        function copyCmd(id, btn) {
+            var text = document.getElementById(id).textContent;
+            navigator.clipboard.writeText(text).then(function () {
+                btn.textContent = '✅ Copied!';
+                btn.classList.add('copied');
+                setTimeout(function () {
+                    btn.textContent = '📋 Copy';
+                    btn.classList.remove('copied');
+                }, 1500);
+            });
+        }
+
+        function copyAll() {
+            var commands = [
+                '# 1. Check if a git repo already exists',
+                'git status',
+                '',
+                '# 2. Initialize a new git repository',
+                'git init',
+                '',
+                '# 3. Stage all files for tracking',
+                'git add .',
+                '',
+                '# 4. Commit staged files with a message',
+                'git commit -m "Initial commit"',
+                '',
+                '# 5. Authenticate with GitHub (one-time)',
+                'gh auth login',
+                '',
+                '# 6. Create the repo on GitHub & link it',
+                'gh repo create your-repo-name --public --source=.',
+                '',
+                '# 7. Push your code to GitHub',
+                'git push -u origin master'
+            ].join('\n');
+
+            var btn = document.querySelector('.btn-copy-all');
+            navigator.clipboard.writeText(commands).then(function () {
+                btn.textContent = '✅ All Copied!';
+                btn.classList.add('copied');
+                setTimeout(function () {
+                    btn.textContent = '📄 Copy All';
+                    btn.classList.remove('copied');
+                }, 1500);
+            });
+        }
+    </script>
 </body>
 </html>
